@@ -1,7 +1,7 @@
 import type { ChangeEvent, FC } from "react";
 
 type Props = {
-  handleOnChangeInput: (value: string) => void;
+  handleOnChangeInput: (value: ChangeEvent<HTMLInputElement>) => void;
 };
 
 /**
@@ -12,7 +12,7 @@ export const Input: FC<Props> = ({ handleOnChangeInput }) => {
     <input
       type="text"
       onChange={(e: ChangeEvent<HTMLInputElement>) =>
-        handleOnChangeInput(e.target.value)
+        handleOnChangeInput(e)
       }
     />
   );

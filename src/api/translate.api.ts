@@ -1,5 +1,5 @@
 import type { TranslationResponse } from "../types/translations";
-import { api } from "./condig";
+import { api } from "./config";
 
 type TranslateProps = {
   text: string;

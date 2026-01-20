@@ -1,3 +1,5 @@
+import "./buttons.css"
+import { Grid } from "@mui/material";
 import type { FC } from "react";
 
 type Props = {
@@ -7,8 +9,10 @@ type Props = {
 
 export const BtnTranslate: FC<Props> = ({ isPending, onClickTranslate }) => {
   return (
-    <button onClick={onClickTranslate} disabled={isPending}>
-      Translate
-    </button>
+    <Grid size={3} height={"40px"}>
+      <button className="btnTranslate" onClick={onClickTranslate} disabled={isPending}>
+        Translate
+      </button>
+    </Grid>
   );
 };

@@ -41,7 +41,6 @@ export const Translator = () => {
       columns={16}
       columnGap={2}
       sx={{
-        height: "50vh",
         justifyContent: "center",
       }}
     >

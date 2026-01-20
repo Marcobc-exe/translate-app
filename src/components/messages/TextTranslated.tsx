@@ -25,7 +25,7 @@ export const OutPutTextArea: FC<Props> = ({ value, height }) => {
       <textarea
         ref={textareaRef}
         className="output-base"
-        value={value}
+        value={value ?? ""}
         readOnly
       />
     </Grid>

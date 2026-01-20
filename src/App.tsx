@@ -1,5 +1,5 @@
 import './App.css'
-import { Translator } from './components/translator/translator'
+import { Translator } from './components/translator/Translator'
 
 const App = () => {
 

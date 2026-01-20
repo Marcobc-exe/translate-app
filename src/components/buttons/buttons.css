@@ -1,0 +1,15 @@
+.btnTranslate {
+  background-color: #263FA9; /* Green */
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 14px;
+  border: 1px solid white;
+  margin-top: 10px;
+  align-self: right;
+}

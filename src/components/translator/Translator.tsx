@@ -3,15 +3,17 @@ import { useTranslate } from "../../hooks/useTranslate";
 import { TextArea } from "../Inputs/Input";
 import { OutPutTextArea } from "../messages/TextTranslated";
 import { TranslateMessages } from "../messages/TranslateMessages";
-import { SelectSourceLan, SelectTargetLan } from "../Selects/SelectLanguage";
+import { SelectLanguage } from "../Selects/SelectLanguage";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
+import type { Language } from "../../types/languages";
+import { LANGUAGES } from "../../consts/Languages";
 
 const MAX_LENGTH = 250;
 
 export const Translator = () => {
-  const [source, setSource] = useState("en");
-  const [target, setTarget] = useState("es");
+  const [source, setSource] = useState<Language>(LANGUAGES[0]);
+  const [target, setTarget] = useState<Language>(LANGUAGES[1]);
   const [input, setInput] = useState("");
   const [inputHeight, setInputHeight] = useState<number>();
 
@@ -32,8 +34,8 @@ export const Translator = () => {
   const handleTranslate = (text?: string) => {
     mutate({
       text: text ?? "",
-      source: source,
-      target: target,
+      source: source.code,
+      target: target.code,
     });
   };
 
@@ -58,12 +60,12 @@ export const Translator = () => {
         bgcolor={"#212936CC"}
         sx={{
           borderRadius: "20px",
-          padding: "18px",
+          padding: "12px 18px",
           border: "2px solid #4D5562",
         }}
       >
         <Grid spacing={2}>
-          <SelectSourceLan source={source} handleSourceChange={setSource} />
+          <SelectLanguage source={source} handleLanguage={setSource} />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
@@ -79,11 +81,11 @@ export const Translator = () => {
         bgcolor={"#212936CC"}
         sx={{
           borderRadius: "20px",
-          padding: "18px",
+          padding: "12px 18px",
           border: "2px solid #4D5562",
         }}
       >
-        <SelectTargetLan target={target} handleTargetChange={setTarget} />
+        <SelectLanguage target={target} handleLanguage={setTarget} />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea
           value={data?.responseData.translatedText}

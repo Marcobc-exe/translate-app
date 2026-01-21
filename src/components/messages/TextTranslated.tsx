@@ -1,4 +1,4 @@
-import "./styles-messages.css"
+import "./styles-messages.css";
 import { useEffect, useRef, type FC } from "react";
 import { Grid } from "@mui/material";
 
@@ -8,12 +8,16 @@ type Props = {
 };
 
 export const OutPutTextArea: FC<Props> = ({ value, height }) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null)
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  useEffect(() => {
+  const handleTextareaHeight = () => {
     if (textareaRef.current && height) {
       textareaRef.current.style.height = `${height}px`;
     }
+  };
+
+  useEffect(() => {
+    handleTextareaHeight();
   }, [height]);
 
   return (
@@ -21,9 +25,9 @@ export const OutPutTextArea: FC<Props> = ({ value, height }) => {
       <textarea
         ref={textareaRef}
         className="output-base"
-        value={value}
+        value={value ?? ""}
         readOnly
       />
     </Grid>
-  )
+  );
 };

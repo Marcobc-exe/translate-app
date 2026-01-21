@@ -4,12 +4,9 @@ import { TextArea } from "../Inputs/Input";
 import { OutPutTextArea } from "../messages/TextTranslated";
 import { TranslateMessages } from "../messages/TranslateMessages";
 import { SelectSourceLan, SelectTargetLan } from "../Selects/SelectLanguage";
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 
-/**
- * Todo: integrate responsive design
- */
 const MAX_LENGTH = 250;
 
 export const Translator = () => {
@@ -20,6 +17,17 @@ export const Translator = () => {
 
   const { mutate, data, isError, isPending } = useTranslate();
   const debounceInput = useDebounce(input, 500);
+
+  /* 
+    xs 0px
+    sm 600px
+    md 900px
+    lg 1200px
+    xl 1536px
+  */
+  const theme = useTheme();
+  const mobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const tablet = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleTranslate = (text?: string) => {
     mutate({
@@ -37,16 +45,16 @@ export const Translator = () => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={mobile ? 1 : 2}
       columns={16}
-      columnGap={2}
+      columnGap={mobile ? 1 : 2}
       sx={{
         justifyContent: "center",
       }}
     >
       {/* INPUT */}
       <Grid
-        size={6}
+        size={(tablet ?? mobile) ? 12 : 6}
         bgcolor={"#212936CC"}
         sx={{
           borderRadius: "20px",
@@ -67,7 +75,7 @@ export const Translator = () => {
 
       {/* OUTPUT */}
       <Grid
-        size={6}
+        size={(tablet ?? mobile) ? 12 : 6}
         bgcolor={"#212936CC"}
         sx={{
           borderRadius: "20px",

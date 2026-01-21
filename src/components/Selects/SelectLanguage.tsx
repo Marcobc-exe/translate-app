@@ -1,8 +1,9 @@
 import "./selects.css";
 import type { FC } from "react";
+import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
 import { Grid } from "@mui/material";
-import type { Language } from "../../types/languages";
+import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 
 type Props = {
   source?: Language;
@@ -36,9 +37,9 @@ export const SelectLanguage: FC<Props> = ({
         ))}
       </select>
       {source ? (
-        <button>{source.label}</button>
+        <BtnDefaultLanguage source={source} handleLanguage={handleLanguage} />
       ) : (
-        <button>{target?.label}</button>
+        <BtnDefaultLanguage target={target} handleLanguage={handleLanguage} />
       )}
     </Grid>
   );

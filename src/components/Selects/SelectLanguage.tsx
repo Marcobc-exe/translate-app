@@ -1,71 +1,46 @@
 import "./selects.css";
-import type { ChangeEvent, FC } from "react";
+import type { FC } from "react";
+import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
 import { Grid } from "@mui/material";
+import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 
-type PropsSource = {
-  source: string;
-  handleSourceChange: (langCode: string) => void;
+type Props = {
+  source?: Language;
+  target?: Language;
+  handleLanguage: (lang: Language) => void;
 };
 
-export const SelectSourceLan: FC<PropsSource> = ({
+export const SelectLanguage: FC<Props> = ({
   source,
-  handleSourceChange,
+  target,
+  handleLanguage,
 }) => {
   return (
     <Grid
       container
       spacing={2}
-      height={"40px"}
-      marginBottom={"10px"}
+      height={"50px"}
       borderBottom={"1px solid #4D5562"}
+      alignItems={"center"}
     >
-      <select value={source} className="select-base">
+      <select className="select-base">
+        <option selected>Select Language</option>
         {LANGUAGES.map((lang) => (
           <option
             key={lang.code}
             className="langOption"
-            value={lang.code}
-            onClick={() => handleSourceChange(lang.code)}
+            onClick={() => handleLanguage(lang)}
           >
             {lang.label}
           </option>
         ))}
       </select>
-    </Grid>
-  );
-};
-
-type PropsTarget = {
-  target: string;
-  handleTargetChange: (e: string) => void;
-};
-
-export const SelectTargetLan: FC<PropsTarget> = ({
-  target,
-  handleTargetChange,
-}) => {
-  return (
-    <Grid
-      container
-      spacing={2}
-      height={"40px"}
-      marginBottom={"10px"}
-      borderBottom={"1px solid #4D5562"}
-    >
-      <select
-        value={target}
-        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          handleTargetChange(e.target.value)
-        }
-        className="select-base"
-      >
-        {LANGUAGES.map((lang) => (
-          <option key={lang.code} value={lang.code} className="langOption">
-            {lang.label}
-          </option>
-        ))}
-      </select>
+      {source ? (
+        <BtnDefaultLanguage source={source} handleLanguage={handleLanguage} />
+      ) : (
+        <BtnDefaultLanguage target={target} handleLanguage={handleLanguage} />
+      )}
     </Grid>
   );
 };

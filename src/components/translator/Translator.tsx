@@ -15,7 +15,7 @@ export const Translator = () => {
   const [input, setInput] = useState("");
   const [inputHeight, setInputHeight] = useState<number>();
 
-  const { mutate, data, isError, isPending } = useTranslate();
+  const { mutate, data, isError, isPending, reset } = useTranslate();
   const debounceInput = useDebounce(input, 500);
 
   /* 
@@ -38,7 +38,7 @@ export const Translator = () => {
   };
 
   useEffect(() => {
-    if (!debounceInput.trim()) return;
+    if (!debounceInput.trim()) return reset();
     handleTranslate(debounceInput.trim());
   }, [debounceInput, source, target]);
 

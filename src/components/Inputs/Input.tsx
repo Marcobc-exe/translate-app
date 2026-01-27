@@ -1,6 +1,6 @@
 import "./input.css";
 import { Grid } from "@mui/material";
-import { useRef, useState, type ChangeEvent, type FC } from "react";
+import { useRef, type ChangeEvent, type FC } from "react";
 
 type Props = {
   value: string;

@@ -8,14 +8,9 @@ import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 type Props = {
   lang: Language;
   handleLanguage: (lang: Language) => void;
-  handleSelectLang: (lang: Language) => void;
 };
 
-export const SelectLanguage: FC<Props> = ({
-  lang,
-  handleLanguage,
-  handleSelectLang,
-}) => {
+export const SelectLanguage: FC<Props> = ({ lang, handleLanguage }) => {
   return (
     <Grid
       container
@@ -30,14 +25,22 @@ export const SelectLanguage: FC<Props> = ({
           <option
             key={lang.code}
             className="langOption"
-            onClick={() => handleSelectLang(lang)}
+            // onClick={() => handleSelectLang(lang)}
           >
             {lang.label}
           </option>
         ))}
       </select>
-      <BtnDefaultLanguage lang={lang} handleLanguage={handleLanguage} />
-      <BtnDefaultLanguage lang={LANGUAGES[1]} handleLanguage={handleLanguage} />
+      <BtnDefaultLanguage
+        lang={LANGUAGES[0]}
+        langSelected={lang}
+        handleLanguage={handleLanguage}
+      />
+      <BtnDefaultLanguage
+        lang={LANGUAGES[1]}
+        langSelected={lang}
+        handleLanguage={handleLanguage}
+      />
     </Grid>
   );
 };

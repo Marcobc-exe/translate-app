@@ -1,8 +1,12 @@
-.btnTranslate {
+.btnTranslate-false, .btnTranslate-true {
   background-color: #212936CC;
   border: none;
   color: white;
   font-size: 16px;
   cursor: pointer;
   height: 40px;
+}
+
+.btnTranslate-true {
+  border-bottom: 2px solid #FFFFFF;
 }

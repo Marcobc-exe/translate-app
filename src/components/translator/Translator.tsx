@@ -44,26 +44,16 @@ export const Translator = () => {
    * Todo functions and behaviors list about the button language:
    *
    * [x] if both sides have same language switch them - Done
-   * [] Highligth current lang btn - Doing
+   * [x] Highligth current lang btn - Doing
    * [] if click on button open select language modal
    */
-  const handleLeftLanguage = (lang: Language) => {
-    if (lang.label === target.label) {
+  const handleLanguage = (lang: Language) => {
+    if (lang.label === target.label || lang.label === source.label) {
       setSource(target);
       setTarget(source);
       return;
     }
   };
-
-  const handleRightLanguage = (lang: Language) => {
-    if (lang.label === source.label) {
-      setSource(target);
-      setTarget(source);
-      return;
-    }
-  };
-
-  const handleSelectLang = () => {};
 
   useEffect(() => {
     if (!debounceInput.trim()) return reset();
@@ -91,11 +81,7 @@ export const Translator = () => {
         }}
       >
         <Grid spacing={2}>
-          <SelectLanguage
-            lang={source}
-            handleLanguage={handleLeftLanguage}
-            handleSelectLang={handleSelectLang}
-          />
+          <SelectLanguage lang={source} handleLanguage={handleLanguage} />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
@@ -116,12 +102,14 @@ export const Translator = () => {
         }}
       >
         <BtnDefaultLanguage
-          lang={target}
-          handleLanguage={handleRightLanguage}
+          lang={LANGUAGES[1]}
+          langSelected={target}
+          handleLanguage={handleLanguage}
         />
         <BtnDefaultLanguage
           lang={LANGUAGES[0]}
-          handleLanguage={handleRightLanguage}
+          langSelected={target}
+          handleLanguage={handleLanguage}
         />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea

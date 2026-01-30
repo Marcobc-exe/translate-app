@@ -20,7 +20,7 @@ export const BtnDefaultLanguage: FC<Props> = ({
 
   return (
     <button
-      className="btn-default-language"
+      className="btnTranslate"
       onClick={handleOnClick}
     >
       {source?.label ?? target?.label}

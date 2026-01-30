@@ -19,7 +19,7 @@ export const SelectLanguage: FC<Props> = ({
   return (
     <Grid
       container
-      spacing={2}
+      spacing={1}
       height={"50px"}
       borderBottom={"1px solid #4D5562"}
       alignItems={"center"}

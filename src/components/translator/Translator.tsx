@@ -8,6 +8,7 @@ import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
+import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 
 const MAX_LENGTH = 250;
 
@@ -39,6 +40,31 @@ export const Translator = () => {
     });
   };
 
+  /**
+   * Todo functions and behaviors list about the button language:
+   *
+   * [x] if both sides have same language switch them - Done
+   * [] Highligth current lang btn - Doing
+   * [] if click on button open select language modal
+   */
+  const handleLeftLanguage = (lang: Language) => {
+    if (lang.label === target.label) {
+      setSource(target);
+      setTarget(source);
+      return;
+    }
+  };
+
+  const handleRightLanguage = (lang: Language) => {
+    if (lang.label === source.label) {
+      setSource(target);
+      setTarget(source);
+      return;
+    }
+  };
+
+  const handleSelectLang = () => {};
+
   useEffect(() => {
     if (!debounceInput.trim()) return reset();
     handleTranslate(debounceInput.trim());
@@ -65,7 +91,11 @@ export const Translator = () => {
         }}
       >
         <Grid spacing={2}>
-          <SelectLanguage source={source} handleLanguage={setSource} />
+          <SelectLanguage
+            lang={source}
+            handleLanguage={handleLeftLanguage}
+            handleSelectLang={handleSelectLang}
+          />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
@@ -85,7 +115,14 @@ export const Translator = () => {
           border: "2px solid #4D5562",
         }}
       >
-        <SelectLanguage target={target} handleLanguage={setTarget} />
+        <BtnDefaultLanguage
+          lang={target}
+          handleLanguage={handleRightLanguage}
+        />
+        <BtnDefaultLanguage
+          lang={LANGUAGES[0]}
+          handleLanguage={handleRightLanguage}
+        />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea
           value={data?.responseData.translatedText}

@@ -6,20 +6,20 @@ import { Grid } from "@mui/material";
 import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 
 type Props = {
-  source?: Language;
-  target?: Language;
+  lang: Language;
   handleLanguage: (lang: Language) => void;
+  handleSelectLang: (lang: Language) => void;
 };
 
 export const SelectLanguage: FC<Props> = ({
-  source,
-  target,
+  lang,
   handleLanguage,
+  handleSelectLang,
 }) => {
   return (
     <Grid
       container
-      spacing={2}
+      spacing={1}
       height={"50px"}
       borderBottom={"1px solid #4D5562"}
       alignItems={"center"}
@@ -30,17 +30,14 @@ export const SelectLanguage: FC<Props> = ({
           <option
             key={lang.code}
             className="langOption"
-            onClick={() => handleLanguage(lang)}
+            onClick={() => handleSelectLang(lang)}
           >
             {lang.label}
           </option>
         ))}
       </select>
-      {source ? (
-        <BtnDefaultLanguage source={source} handleLanguage={handleLanguage} />
-      ) : (
-        <BtnDefaultLanguage target={target} handleLanguage={handleLanguage} />
-      )}
+      <BtnDefaultLanguage lang={lang} handleLanguage={handleLanguage} />
+      <BtnDefaultLanguage lang={LANGUAGES[1]} handleLanguage={handleLanguage} />
     </Grid>
   );
 };

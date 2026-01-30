@@ -3,27 +3,14 @@ import type { FC } from "react";
 import type { Language } from "../../types/languages";
 
 type Props = {
-  source?: Language;
-  target?: Language;
+  lang: Language;
   handleLanguage: (lang: Language) => void;
 };
 
-export const BtnDefaultLanguage: FC<Props> = ({
-  source,
-  target,
-  handleLanguage,
-}) => {
-  const handleOnClick = () => {
-    if (source) return handleLanguage(source);
-    if (target) handleLanguage(target);
-  };
-
+export const BtnDefaultLanguage: FC<Props> = ({ lang, handleLanguage }) => {
   return (
-    <button
-      className="btnTranslate"
-      onClick={handleOnClick}
-    >
-      {source?.label ?? target?.label}
+    <button className="btnTranslate" onClick={() => handleLanguage(lang)}>
+      {lang.label}
     </button>
   );
 };

@@ -55,6 +55,19 @@ export const Translator = () => {
     }
   };
 
+  /**
+   * Chagne language from the language modal
+   * @param lang 
+   */
+  const handleChangeLang = (lang: Language) => {
+    if (target.code === lang.code) {
+      setSource(lang)
+      setTarget(source)
+    } else {
+      setSource(lang);
+    }
+  }
+
   useEffect(() => {
     if (!debounceInput.trim()) return reset();
     handleTranslate(debounceInput.trim());
@@ -81,7 +94,11 @@ export const Translator = () => {
         }}
       >
         <Grid spacing={2}>
-          <SelectLanguage lang={source} handleLanguage={handleLanguage} />
+          <SelectLanguage
+            lang={source}
+            handleLanguage={handleLanguage}
+            onChangeLang={handleChangeLang}
+          />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
@@ -108,6 +125,11 @@ export const Translator = () => {
         />
         <BtnDefaultLanguage
           lang={LANGUAGES[0]}
+          langSelected={target}
+          handleLanguage={handleLanguage}
+        />
+        <BtnDefaultLanguage
+          lang={LANGUAGES[2]}
           langSelected={target}
           handleLanguage={handleLanguage}
         />

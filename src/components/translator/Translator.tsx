@@ -53,6 +53,14 @@ export const Translator = () => {
       setTarget(source);
       return;
     }
+
+    if (lang.label != target.label) {
+      return setSource(lang);
+    }
+
+    if (lang.label != source.label) {
+      return setTarget(lang);
+    }
   };
 
   /**

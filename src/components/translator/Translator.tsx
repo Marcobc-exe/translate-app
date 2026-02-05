@@ -8,6 +8,7 @@ import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
+import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 
 const MAX_LENGTH = 250;
 
@@ -39,6 +40,34 @@ export const Translator = () => {
     });
   };
 
+  /**
+   * Todo functions and behaviors list about the button language:
+   *
+   * [x] if both sides have same language switch them - Done
+   * [x] Highligth current lang btn - Doing
+   * [] if click on button open select language modal
+   */
+  const handleLanguage = (lang: Language) => {
+    if (lang.label === target.label || lang.label === source.label) {
+      setSource(target);
+      setTarget(source);
+      return;
+    }
+  };
+
+  /**
+   * Chagne language from the language modal
+   * @param lang 
+   */
+  const handleChangeLang = (lang: Language) => {
+    if (target.code === lang.code) {
+      setSource(lang)
+      setTarget(source)
+    } else {
+      setSource(lang);
+    }
+  }
+
   useEffect(() => {
     if (!debounceInput.trim()) return reset();
     handleTranslate(debounceInput.trim());
@@ -65,7 +94,11 @@ export const Translator = () => {
         }}
       >
         <Grid spacing={2}>
-          <SelectLanguage source={source} handleLanguage={setSource} />
+          <SelectLanguage
+            lang={source}
+            handleLanguage={handleLanguage}
+            onChangeLang={handleChangeLang}
+          />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
@@ -85,7 +118,21 @@ export const Translator = () => {
           border: "2px solid #4D5562",
         }}
       >
-        <SelectLanguage target={target} handleLanguage={setTarget} />
+        <BtnDefaultLanguage
+          lang={LANGUAGES[1]}
+          langSelected={target}
+          handleLanguage={handleLanguage}
+        />
+        <BtnDefaultLanguage
+          lang={LANGUAGES[0]}
+          langSelected={target}
+          handleLanguage={handleLanguage}
+        />
+        <BtnDefaultLanguage
+          lang={LANGUAGES[2]}
+          langSelected={target}
+          handleLanguage={handleLanguage}
+        />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea
           value={data?.responseData.translatedText}

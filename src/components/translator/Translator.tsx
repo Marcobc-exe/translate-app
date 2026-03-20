@@ -54,14 +54,18 @@ export const Translator = () => {
       return;
     }
 
-    if (lang.label != target.label) {
-      return setSource(lang);
+    setSource(lang);
+  };
+
+  const handleLangRightSide = (lang: Language) => {
+    if (lang.label === source.label) {
+      setSource(target);
+      setTarget(lang);
+      return;
     }
 
-    if (lang.label != source.label) {
-      return setTarget(lang);
-    }
-  };
+    setTarget(lang);
+  }
 
   /**
    * Chagne language from the language modal
@@ -132,17 +136,17 @@ export const Translator = () => {
         <BtnDefaultLanguage
           lang={LANGUAGES[1]}
           langSelected={target}
-          handleLanguage={handleLanguage}
+          handleLanguage={handleLangRightSide}
         />
         <BtnDefaultLanguage
           lang={LANGUAGES[0]}
           langSelected={target}
-          handleLanguage={handleLanguage}
+          handleLanguage={handleLangRightSide}
         />
         <BtnDefaultLanguage
           lang={LANGUAGES[2]}
           langSelected={target}
-          handleLanguage={handleLanguage}
+          handleLanguage={handleLangRightSide}
         />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea

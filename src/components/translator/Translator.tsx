@@ -89,7 +89,7 @@ export const Translator = () => {
     <Grid
       container
       spacing={mobile ? 1 : 2}
-      columns={16}
+      columns={14}
       columnGap={mobile ? 1 : 2}
       sx={{
         justifyContent: "center",
@@ -103,7 +103,7 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
-          height: "43vh"
+          height: "30vh"
 
         }}
       >
@@ -130,7 +130,7 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
-          height: "43vh"
+          height: "30vh"
         }}
       >
         <BtnDefaultLanguage

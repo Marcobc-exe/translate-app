@@ -99,6 +99,8 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
+          height: "43vh"
+
         }}
       >
         <Grid spacing={2}>
@@ -124,6 +126,7 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
+          height: "43vh"
         }}
       >
         <BtnDefaultLanguage

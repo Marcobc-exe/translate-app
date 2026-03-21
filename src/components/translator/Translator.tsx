@@ -3,12 +3,10 @@ import { useTranslate } from "../../hooks/useTranslate";
 import { TextArea } from "../Inputs/Input";
 import { OutPutTextArea } from "../messages/TextTranslated";
 import { TranslateMessages } from "../messages/TranslateMessages";
-import { SelectLanguage } from "../Selects/SelectLanguage";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
-import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
 import { LanguagePanel } from "../LanguagePanel/LanguagePanel";
 
 const MAX_LENGTH = 250;
@@ -109,6 +107,7 @@ export const Translator = () => {
       >
         <Grid spacing={2}>
           <LanguagePanel
+            mobile={mobile}
             lang={source}
             handleLanguage={handleLanguage}
             onChangeLang={handleChangeLang}
@@ -134,6 +133,7 @@ export const Translator = () => {
         }}
       >
         <LanguagePanel
+          mobile={mobile}
           lang={target}
           handleLanguage={handleLangRightSide}
           onChangeLang={handleChangeLang}

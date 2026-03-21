@@ -1,11 +1,12 @@
 import './App.css'
+import { Title } from './components/Title/Title'
 import { Translator } from './components/translator/Translator'
 
 const App = () => {
 
   return (
     <>
-      <h1>Translate App</h1>
+      <Title />
       <Translator />
     </>
   )

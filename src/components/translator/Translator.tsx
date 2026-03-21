@@ -9,6 +9,7 @@ import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
 import { BtnDefaultLanguage } from "../buttons/BtnDefaultLanguage";
+import { LanguagePanel } from "../LanguagePanel/LanguagePanel";
 
 const MAX_LENGTH = 250;
 
@@ -65,20 +66,20 @@ export const Translator = () => {
     }
 
     setTarget(lang);
-  }
+  };
 
   /**
    * Chagne language from the language modal
-   * @param lang 
+   * @param lang
    */
   const handleChangeLang = (lang: Language) => {
     if (target.code === lang.code) {
-      setSource(lang)
-      setTarget(source)
+      setSource(lang);
+      setTarget(source);
     } else {
       setSource(lang);
     }
-  }
+  };
 
   useEffect(() => {
     if (!debounceInput.trim()) return reset();
@@ -103,12 +104,11 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
-          height: "30vh"
-
+          height: "30vh",
         }}
       >
         <Grid spacing={2}>
-          <SelectLanguage
+          <LanguagePanel
             lang={source}
             handleLanguage={handleLanguage}
             onChangeLang={handleChangeLang}
@@ -130,23 +130,13 @@ export const Translator = () => {
           borderRadius: "20px",
           padding: "12px 18px",
           border: "2px solid #4D5562",
-          height: "30vh"
+          height: "30vh",
         }}
       >
-        <BtnDefaultLanguage
-          lang={LANGUAGES[1]}
-          langSelected={target}
+        <LanguagePanel
+          lang={target}
           handleLanguage={handleLangRightSide}
-        />
-        <BtnDefaultLanguage
-          lang={LANGUAGES[0]}
-          langSelected={target}
-          handleLanguage={handleLangRightSide}
-        />
-        <BtnDefaultLanguage
-          lang={LANGUAGES[2]}
-          langSelected={target}
-          handleLanguage={handleLangRightSide}
+          onChangeLang={handleChangeLang}
         />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea

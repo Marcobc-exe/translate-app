@@ -15,7 +15,10 @@ export const BtnDefaultLanguage: FC<Props> = ({
 }) => {
   const selected = lang.code === langSelected.code;
   return (
-    <button className={`btnTranslate-${selected}`} onClick={() => handleLanguage(lang)}>
+    <button
+      className={`btnTranslate-${selected}`}
+      onClick={() => handleLanguage(lang)}
+    >
       {lang.label}
     </button>
   );

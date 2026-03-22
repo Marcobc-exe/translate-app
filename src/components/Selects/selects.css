@@ -52,3 +52,7 @@
 .active {
   background: #394253;
 }
+
+.focused {
+  background: #2b3442;
+}

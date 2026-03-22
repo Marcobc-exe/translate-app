@@ -11,11 +11,37 @@ type Props = {
 
 export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
   const [open, setOpen] = useState(false);
+  const [focusedIndex, setFocusedIndex] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
 
   const handleSelect = (language: Language) => {
     onChangeLang(language);
     setOpen(false);
+  };
+
+  // Navigation with arrows keys function
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!open && e.key === "Enter") return setOpen(true);
+    if (e.key === "Escape") return setOpen(false);
+    
+    if (e.key === "Enter") {
+      handleSelect(ALLLANGUAGES[focusedIndex]);
+      setOpen(false);
+    }
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      return setFocusedIndex((prev) =>
+        prev === ALLLANGUAGES.length - 1 ? 0 : prev + 1,
+      );
+    }
+
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      return setFocusedIndex((prev) =>
+        prev === 0 - 1 ? ALLLANGUAGES.length : prev - 1,
+      );
+    }
   };
 
   // Close if clicked out
@@ -30,7 +56,12 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
   }, []);
 
   return (
-    <div className="custom-select" ref={ref}>
+    <div
+      className="custom-select"
+      ref={ref}
+      tabIndex={0}
+      onKeyDown={handleKeyDown}
+    >
       <button className="select-button" onClick={() => setOpen(!open)}>
         {mobile && lang.label}
         <span className={`arrow ${open ? "rotate" : ""}`}>▼</span>
@@ -38,12 +69,12 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
 
       {open && (
         <div className="dropdown">
-          {ALLLANGUAGES.map((language) => (
+          {ALLLANGUAGES.map((language, index) => (
             <div
               key={language.code}
               className={`option ${
                 language.code === lang.code ? "active" : ""
-              }`}
+              } ${index === focusedIndex ? "focused" : ""}`}
               onClick={() => handleSelect(language)}
             >
               {language.label}

@@ -12,7 +12,8 @@ type Props = {
 };
 
 /* 
-  TODO: [] Save most used languages list on localStorage
+  TODO: Save most used languages list on localStorage
+  !Fix: Duplication of language in most used languages list
 */
 export const SelectLang: FC<Props> = ({
   mobile,

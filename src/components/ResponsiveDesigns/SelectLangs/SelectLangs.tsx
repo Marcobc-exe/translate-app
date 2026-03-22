@@ -11,6 +11,9 @@ type Props = {
   onChangeLang: (lang: Language) => void;
 };
 
+/* 
+  TODO: [] Save most used languages list on localStorage
+*/
 export const SelectLang: FC<Props> = ({
   mobile,
   lang,
@@ -40,15 +43,15 @@ export const SelectLang: FC<Props> = ({
         />
       ) : (
         <>
-          <SelectLanguage
-            onChangeLang={mostUsedLanguages}
-            mobile={mobile}
-            lang={lang}
-          />
           <MostLikedLangs
             languagesList={languagesList}
             lang={lang}
             handleLanguage={handleLanguage}
+          />
+          <SelectLanguage
+            onChangeLang={mostUsedLanguages}
+            mobile={mobile}
+            lang={lang}
           />
         </>
       )}

@@ -23,7 +23,7 @@ export const LanguagePanel: FC<Props> = ({
       height={"50px"}
       borderBottom={"1px solid #4D5562"}
       alignItems={"center"}
-      justifyContent={"center"}
+      justifyContent={mobile ? "center" : "normal"}
     >
       <SelectLang
         lang={lang}

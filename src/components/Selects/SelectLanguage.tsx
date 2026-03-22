@@ -9,9 +9,6 @@ type Props = {
   onChangeLang: (lang: Language) => void;
 };
 
-/**
- * Todo about most used language by user
- */
 export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
   return (
     <select className="select-base">

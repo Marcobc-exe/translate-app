@@ -1,7 +1,8 @@
-import type { FC } from "react";
+import { useState, type FC } from "react";
 import type { Language } from "../../../types/languages";
 import { SelectLanguage } from "../../Selects/SelectLanguage";
 import { MostLikedLangs } from "../../MostLikedLangs/MostLikedLangs";
+import { LANGUAGES } from "../../../consts/Languages";
 
 type Props = {
   mobile: boolean;
@@ -16,22 +17,39 @@ export const SelectLang: FC<Props> = ({
   handleLanguage,
   onChangeLang,
 }) => {
+  const [languagesList, setLanguagesList] = useState<Language[]>(() => {
+    const list = localStorage.getItem("mostUsedLanguages");
+    if (list) return JSON.parse(list);
+    return LANGUAGES;
+  });
+
+  const mostUsedLanguages = (lang: Language) => {
+    languagesList.pop();
+    languagesList.unshift(lang);
+    setLanguagesList(languagesList);
+    onChangeLang(lang);
+  };
+
   return (
     <>
       {mobile ? (
         <SelectLanguage
-          onChangeLang={onChangeLang}
+          onChangeLang={mostUsedLanguages}
           mobile={mobile}
           lang={lang}
         />
       ) : (
         <>
           <SelectLanguage
-            onChangeLang={onChangeLang}
+            onChangeLang={mostUsedLanguages}
             mobile={mobile}
             lang={lang}
           />
-          <MostLikedLangs lang={lang} handleLanguage={handleLanguage} />
+          <MostLikedLangs
+            languagesList={languagesList}
+            lang={lang}
+            handleLanguage={handleLanguage}
+          />
         </>
       )}
     </>

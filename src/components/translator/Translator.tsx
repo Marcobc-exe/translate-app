@@ -44,7 +44,8 @@ export const Translator = () => {
    *
    * [x] if both sides have same language switch them - Done
    * [x] Highligth current lang btn - Doing
-   * [] if click on button open select language modal
+   * [x] if click on button open select language modal
+   * [] How to do a list about most used user's languages
    */
   const handleLanguage = (lang: Language) => {
     if (lang.label === target.label || lang.label === source.label) {
@@ -64,19 +65,6 @@ export const Translator = () => {
     }
 
     setTarget(lang);
-  };
-
-  /**
-   * Chagne language from the language modal
-   * @param lang
-   */
-  const handleChangeLang = (lang: Language) => {
-    if (target.code === lang.code) {
-      setSource(lang);
-      setTarget(source);
-    } else {
-      setSource(lang);
-    }
   };
 
   useEffect(() => {
@@ -110,7 +98,7 @@ export const Translator = () => {
             mobile={mobile}
             lang={source}
             handleLanguage={handleLanguage}
-            onChangeLang={handleChangeLang}
+            onChangeLang={handleLanguage}
           />
           <TextArea
             value={input}
@@ -136,7 +124,7 @@ export const Translator = () => {
           mobile={mobile}
           lang={target}
           handleLanguage={handleLangRightSide}
-          onChangeLang={handleChangeLang}
+          onChangeLang={handleLangRightSide}
         />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea

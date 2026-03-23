@@ -28,17 +28,31 @@ export const TextArea: FC<Props> = ({
     }
   };
 
+  const handleClear = () => {
+    onChange("");
+    textareaRef.current?.focus();
+  };
+
   return (
     <Grid size={6} width={"100%"}>
-      <textarea
-        ref={textareaRef}
-        className="input-base"
-        placeholder="Translate something..."
-        autoFocus
-        maxLength={maxLength}
-        value={value}
-        onChange={handleChange}
-      />
+      <div className="input-wrapper">
+        <textarea
+          ref={textareaRef}
+          className="input-base"
+          placeholder="Translate something..."
+          autoFocus
+          maxLength={maxLength}
+          value={value}
+          onChange={handleChange}
+        />
+        <button
+          className={`btn-clearinput ${value ? "visible" : ""}`}
+          onClick={handleClear}
+        >
+          ✕
+        </button>
+      </div>
+
       <div className="char-counter">
         {value.length}/{maxLength}
       </div>

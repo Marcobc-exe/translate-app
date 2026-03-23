@@ -13,10 +13,15 @@ export const MostLikedLangs: FC<Props> = ({
   lang,
   handleLanguage,
 }) => {
+  const uniqueLanguages = Array.from(
+    new Map([lang, ...languagesList].map((l) => [l.code, l])).values()
+  );
+
   return (
     <>
-      {languagesList.map((language) => (
+      {uniqueLanguages.map((language) => (
         <BtnDefaultLanguage
+          key={language.code}
           lang={language}
           langSelected={lang}
           handleLanguage={handleLanguage}

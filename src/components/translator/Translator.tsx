@@ -12,8 +12,16 @@ import { LanguagePanel } from "../LanguagePanel/LanguagePanel";
 const MAX_LENGTH = 250;
 
 export const Translator = () => {
-  const [source, setSource] = useState<Language>(LANGUAGES[0]);
-  const [target, setTarget] = useState<Language>(LANGUAGES[1]);
+  const [source, setSource] = useState<Language>(() => {
+    const sourceLang = localStorage.getItem("sourceLang");
+    if (sourceLang) return JSON.parse(sourceLang);
+    return LANGUAGES[0];
+  });
+  const [target, setTarget] = useState<Language>(() => {
+    const targetLang = localStorage.getItem("targetLang");
+    if (targetLang) return JSON.parse(targetLang);
+    return LANGUAGES[1];
+  });
   const [input, setInput] = useState("");
   const [inputHeight, setInputHeight] = useState<number>();
 
@@ -48,6 +56,7 @@ export const Translator = () => {
    * [] How to do a list about most used user's languages
    */
   const handleLanguage = (lang: Language) => {
+    localStorage.setItem("sourceLang", JSON.stringify(lang));
     if (lang.label === target.label || lang.label === source.label) {
       setSource(target);
       setTarget(source);
@@ -58,6 +67,7 @@ export const Translator = () => {
   };
 
   const handleLangRightSide = (lang: Language) => {
+    localStorage.setItem("targetLang", JSON.stringify(lang));
     if (lang.label === source.label) {
       setSource(target);
       setTarget(lang);

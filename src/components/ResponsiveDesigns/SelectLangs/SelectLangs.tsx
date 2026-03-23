@@ -14,6 +14,7 @@ type Props = {
 /* 
   TODO: Save most used languages list on localStorage
   !Fix: Duplication of language in most used languages list
+  // !Fix: Can click current/target language
 */
 export const SelectLang: FC<Props> = ({
   mobile,
@@ -28,6 +29,10 @@ export const SelectLang: FC<Props> = ({
   });
 
   const mostUsedLanguages = (lang: Language) => {
+    const exists = languagesList.find(langlist => langlist.code === lang.code);
+    
+    if (exists) return onChangeLang(lang);
+
     languagesList.pop();
     languagesList.unshift(lang);
     setLanguagesList(languagesList);

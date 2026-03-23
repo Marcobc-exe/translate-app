@@ -53,7 +53,7 @@ export const TextArea: FC<Props> = ({
         </button>
       </div>
 
-      <div className="char-counter">
+      <div className={`char-counter ${value ? "visible" : ""}`}>
         {value.length}/{maxLength}
       </div>
     </Grid>

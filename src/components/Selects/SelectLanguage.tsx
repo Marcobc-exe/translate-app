@@ -21,10 +21,14 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
 
   // Navigation with arrows keys function
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!open && e.key === "Enter") return setOpen(true);
+    if (!open && e.key === "Enter") {
+      e.preventDefault();
+      return setOpen(true);
+    }
     if (e.key === "Escape") return setOpen(false);
 
     if (e.key === "Enter") {
+      e.preventDefault();
       handleSelect(ALLLANGUAGES[focusedIndex]);
       setOpen(false);
     }

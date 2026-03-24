@@ -11,17 +11,18 @@ import { LanguagePanel } from "../LanguagePanel/LanguagePanel";
 
 const MAX_LENGTH = 250;
 
+const getStoredLanguage = (key: string, fallback: Language) => {
+  const stored = localStorage.getItem(key);
+  return stored ? JSON.parse(stored) : fallback;
+};
+
 export const Translator = () => {
-  const [source, setSource] = useState<Language>(() => {
-    const sourceLang = localStorage.getItem("sourceLang");
-    if (sourceLang) return JSON.parse(sourceLang);
-    return LANGUAGES[0];
-  });
-  const [target, setTarget] = useState<Language>(() => {
-    const targetLang = localStorage.getItem("targetLang");
-    if (targetLang) return JSON.parse(targetLang);
-    return LANGUAGES[1];
-  });
+  const [source, setSource] = useState<Language>(() =>
+    getStoredLanguage("sourceLang", LANGUAGES[0]),
+  );
+  const [target, setTarget] = useState<Language>(() =>
+    getStoredLanguage("targetLang", LANGUAGES[1]),
+  );
   const [input, setInput] = useState("");
   const [inputHeight, setInputHeight] = useState<number>();
 
@@ -39,47 +40,37 @@ export const Translator = () => {
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const tablet = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleTranslate = (text?: string) => {
+  const translateText = (text: string) => {
     mutate({
-      text: text ?? "",
+      text: text,
       source: source.code,
       target: target.code,
     });
   };
 
-  /**
-   * Todo functions and behaviors list about the button language:
-   *
-   * [x] if both sides have same language switch them - Done
-   * [x] Highligth current lang btn - Doing
-   * [x] if click on button open select language modal
-   * [] How to do a list about most used user's languages
-   */
-  const handleLanguage = (lang: Language) => {
-    localStorage.setItem("sourceLang", JSON.stringify(lang));
-    if (lang.label === target.label || lang.label === source.label) {
-      setSource(target);
-      setTarget(source);
-      return;
-    }
+  const switchLanguages = () => {
+    setSource(target);
+    setTarget(source);
+  };
 
+  const handleSourceLang = (lang: Language) => {
+    localStorage.setItem("sourceLang", JSON.stringify(lang));
+
+    if (lang.code === target.code) return switchLanguages();
     setSource(lang);
   };
 
-  const handleLangRightSide = (lang: Language) => {
+  const handleTargetLang = (lang: Language) => {
     localStorage.setItem("targetLang", JSON.stringify(lang));
-    if (lang.label === source.label) {
-      setSource(target);
-      setTarget(lang);
-      return;
-    }
 
+    if (lang.code === target.code) return switchLanguages();
     setTarget(lang);
   };
 
   useEffect(() => {
-    if (!debounceInput.trim()) return reset();
-    handleTranslate(debounceInput.trim());
+    const text = debounceInput.trim();
+    if (!text) return reset();
+    translateText(text);
   }, [debounceInput, source, target]);
 
   return (
@@ -107,8 +98,8 @@ export const Translator = () => {
           <LanguagePanel
             mobile={mobile}
             lang={source}
-            handleLanguage={handleLanguage}
-            onChangeLang={handleLanguage}
+            handleLanguage={handleSourceLang}
+            onChangeLang={handleSourceLang}
           />
           <TextArea
             value={input}
@@ -133,8 +124,8 @@ export const Translator = () => {
         <LanguagePanel
           mobile={mobile}
           lang={target}
-          handleLanguage={handleLangRightSide}
-          onChangeLang={handleLangRightSide}
+          handleLanguage={handleTargetLang}
+          onChangeLang={handleTargetLang}
         />
         <TranslateMessages isError={isError} isPending={isPending} />
         <OutPutTextArea

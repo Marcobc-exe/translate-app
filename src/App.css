@@ -1,6 +1,6 @@
-/* #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-} */
+html {
+  background: linear-gradient(180deg, #0f172a, #020617);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: white;
+  height: 100%;
+}

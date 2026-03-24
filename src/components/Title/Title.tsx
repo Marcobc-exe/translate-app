@@ -1,5 +1,7 @@
+import "./title.css"
+
 export const Title = () => {
   return (
-    <h1>Translate App</h1>
+    <h1 className="title">Translate App</h1>
   )
 }

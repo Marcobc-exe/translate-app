@@ -1,6 +1,7 @@
 .output-base {
+  color: #e2e8f0;
   width: 100%;
-  min-height: 28vh;
+  min-height: 140px;
   padding: 12px;
 
   border-radius: 12px;
@@ -12,6 +13,9 @@
 
   font-size: 18px;
   box-sizing: border-box;
+
+  font-size: 18px;
+  line-height: 1.5;
 }
 
 .output-base:focus {

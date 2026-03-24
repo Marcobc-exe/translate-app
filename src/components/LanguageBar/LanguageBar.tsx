@@ -1,3 +1,4 @@
+import "./langbar.css"
 import type { FC } from "react";
 import { Grid } from "@mui/material";
 import type { Language } from "../../types/languages";
@@ -10,7 +11,7 @@ type Props = {
   onChangeLang: (lang: Language) => void;
 };
 
-export const LanguagePanel: FC<Props> = ({
+export const LanguageBar: FC<Props> = ({
   mobile,
   lang,
   handleLanguage,
@@ -18,12 +19,10 @@ export const LanguagePanel: FC<Props> = ({
 }) => {
   return (
     <Grid
+      className="language-bar"
       container
-      spacing={1}
-      height={"50px"}
-      borderBottom={"1px solid #4D5562"}
       alignItems={"center"}
-      justifyContent={mobile ? "center" : "normal"}
+      justifyContent={"center"}
     >
       <SelectLang
         lang={lang}

@@ -5,25 +5,30 @@
 
 .input-base {
   width: 100%;
-  min-height: 16vh;
+  min-height: 140px;
+  background: transparent;
   border: none;
-  background-color: transparent;
-
-  padding: 12px 40px 12px 12px;
-  resize: none;
-
-  text-align: left;
-  vertical-align: top;
-  box-sizing: border-box;
-
+  outline: none;
+  color: #f8fafc;
   font-size: 18px;
-  overflow: hidden;
+  line-height: 1.5;
+  resize: none;
+  padding: 6px 0;
 }
 
+.input-base::placeholder {
+  color: #64748b;
+}
+
+/* smooth typing feel */
 .input-base:focus {
   outline: none;
-  border-color: transparent;
 }
+
+/* .input-base:focus {
+  outline: none;
+  border-color: transparent;
+} */
 
 .char-counter {
   margin-top: 6px;

@@ -1,12 +1,21 @@
-.btnTranslate-false, .btnTranslate-true {
-  background-color: #212936CC;
+.btnTranslate-true,
+.btnTranslate-false {
   border: none;
-  color: white;
-  font-size: 16px;
+  background: transparent;
+  font-size: 14px;
+  padding: 6px 10px;
   cursor: pointer;
-  height: 40px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+  color: #94a3b8;
 }
 
 .btnTranslate-true {
-  border-bottom: 2px solid #FFFFFF;
+  color: white;
+  border-bottom: 2px solid white;
+}
+
+.btnTranslate-false:hover {
+  background: #0f172a;
+  color: white;
 }

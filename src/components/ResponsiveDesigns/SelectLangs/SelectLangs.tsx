@@ -48,7 +48,7 @@ export const SelectLang: FC<Props> = ({
           lang={lang}
         />
       ) : (
-        <>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
           <MostLikedLangs
             languagesList={languagesList}
             lang={lang}
@@ -59,7 +59,7 @@ export const SelectLang: FC<Props> = ({
             mobile={mobile}
             lang={lang}
           />
-        </>
+        </div>
       )}
     </>
   );

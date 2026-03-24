@@ -1,3 +1,4 @@
+import "./translator.css";
 import { useEffect, useState } from "react";
 import { useTranslate } from "../../hooks/useTranslate";
 import { TextArea } from "../Inputs/Input";
@@ -7,7 +8,7 @@ import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
 import { LANGUAGES } from "../../consts/Languages";
-import { LanguagePanel } from "../LanguagePanel/LanguagePanel";
+import { LanguageBar } from "../LanguageBar/LanguageBar";
 
 const MAX_LENGTH = 250;
 
@@ -76,26 +77,18 @@ export const Translator = () => {
   return (
     <Grid
       container
-      spacing={mobile ? 1 : 2}
-      columns={14}
-      columnGap={mobile ? 1 : 2}
+      spacing={3}
+      justifyContent={"center"}
       sx={{
-        justifyContent: "center",
+        maxWidth: "1350px",
+        margin: "0 auto",
+        padding: "30px 16px"
       }}
     >
       {/* INPUT */}
-      <Grid
-        size={(tablet ?? mobile) ? 12 : 6}
-        bgcolor={"#212936CC"}
-        sx={{
-          borderRadius: "20px",
-          padding: "12px 18px",
-          border: "2px solid #4D5562",
-          height: "30vh",
-        }}
-      >
+      <Grid size={(tablet ?? mobile) ? 12 : 6} className="translate-box">
         <Grid spacing={2}>
-          <LanguagePanel
+          <LanguageBar
             mobile={mobile}
             lang={source}
             handleLanguage={handleSourceLang}
@@ -111,17 +104,8 @@ export const Translator = () => {
       </Grid>
 
       {/* OUTPUT */}
-      <Grid
-        size={(tablet ?? mobile) ? 12 : 6}
-        bgcolor={"#212936CC"}
-        sx={{
-          borderRadius: "20px",
-          padding: "12px 18px",
-          border: "2px solid #4D5562",
-          height: "30vh",
-        }}
-      >
-        <LanguagePanel
+      <Grid size={(tablet ?? mobile) ? 12 : 6} className="translate-box">
+        <LanguageBar
           mobile={mobile}
           lang={target}
           handleLanguage={handleTargetLang}

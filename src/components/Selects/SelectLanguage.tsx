@@ -43,7 +43,7 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
     if (e.key === "ArrowUp") {
       e.preventDefault();
       return setFocusedIndex((prev) =>
-        prev === 0 - 1 ? ALLLANGUAGES.length : prev - 1,
+        prev === 0 ? ALLLANGUAGES.length - 1 : prev - 1,
       );
     }
   };

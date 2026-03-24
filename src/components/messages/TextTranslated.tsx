@@ -5,27 +5,35 @@ import { Grid } from "@mui/material";
 type Props = {
   value: string | undefined;
   height?: number;
+  isPending: boolean;
+  isError: boolean;
 };
 
-export const OutPutTextArea: FC<Props> = ({ value, height }) => {
+export const TextTranslated: FC<Props> = ({
+  value,
+  height,
+  isPending,
+  isError,
+}) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleTextareaHeight = () => {
+  useEffect(() => {
     if (textareaRef.current && height) {
       textareaRef.current.style.height = `${height}px`;
     }
-  };
-
-  useEffect(() => {
-    handleTextareaHeight();
   }, [height]);
 
+  let displayText = value ?? "";
+
+  if (isPending) displayText = "Translating...";
+  if (isError) displayText = "Error translating text";
+
   return (
-    <Grid size={6} width={"100%"}>
+    <Grid width={"100%"}>
       <textarea
         ref={textareaRef}
         className="output-base"
-        value={value ?? ""}
+        value={displayText}
         readOnly
       />
     </Grid>

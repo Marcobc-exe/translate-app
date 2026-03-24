@@ -2,8 +2,7 @@ import "./translator.css";
 import { useEffect, useState } from "react";
 import { useTranslate } from "../../hooks/useTranslate";
 import { TextArea } from "../Inputs/Input";
-import { OutPutTextArea } from "../messages/TextTranslated";
-import { TranslateMessages } from "../messages/TranslateMessages";
+import { TextTranslated } from "../messages/TextTranslated";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import type { Language } from "../../types/languages";
@@ -111,8 +110,9 @@ export const Translator = () => {
           handleLanguage={handleTargetLang}
           onChangeLang={handleTargetLang}
         />
-        <TranslateMessages isError={isError} isPending={isPending} />
-        <OutPutTextArea
+        <TextTranslated
+          isError={isError}
+          isPending={isPending}
           value={data?.responseData.translatedText}
           height={inputHeight}
         />

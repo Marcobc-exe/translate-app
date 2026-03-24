@@ -23,7 +23,7 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     if (!open && e.key === "Enter") return setOpen(true);
     if (e.key === "Escape") return setOpen(false);
-    
+
     if (e.key === "Enter") {
       handleSelect(ALLLANGUAGES[focusedIndex]);
       setOpen(false);
@@ -64,7 +64,11 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
     >
       <button className="select-button" onClick={() => setOpen(!open)}>
         {mobile && lang.label}
-        <span className={`arrow ${open ? "rotate" : ""}`}>▼</span>
+        <span
+          className={`arrow ${open ? "rotate" : ""} ${mobile ? "mobile" : ""}`}
+        >
+          ▼
+        </span>
       </button>
 
       {open && (

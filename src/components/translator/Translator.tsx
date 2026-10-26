@@ -5,26 +5,14 @@ import { TextArea } from "../Inputs/Input";
 import { TextTranslated } from "../messages/TextTranslated";
 import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
-import type { Language } from "../../types/languages";
-import { LANGUAGES } from "../../consts/Languages";
 import { LanguageBar } from "../LanguageBar/LanguageBar";
+import { useLanguagePair } from "../../hooks/useLanguagePair";
 
 const MAX_LENGTH = 250;
 
-const getStoredLanguage = (key: string, fallback: Language) => {
-  const stored = localStorage.getItem(key);
-  return stored ? JSON.parse(stored) : fallback;
-};
-
 export const Translator = () => {
-  const [source, setSource] = useState<Language>(() =>
-    getStoredLanguage("sourceLang", LANGUAGES[0]),
-  );
-  const [target, setTarget] = useState<Language>(() =>
-    getStoredLanguage("targetLang", LANGUAGES[1]),
-  );
+  const { source, target, setSource, setTarget } = useLanguagePair();
   const [input, setInput] = useState("");
-  const [inputHeight, setInputHeight] = useState<number>();
 
   const { mutate, data, isError, isPending, reset } = useTranslate();
   const debounceInput = useDebounce(input, 500);
@@ -46,25 +34,6 @@ export const Translator = () => {
       source: source.code,
       target: target.code,
     });
-  };
-
-  const switchLanguages = () => {
-    setSource(target);
-    setTarget(source);
-  };
-
-  const handleSourceLang = (lang: Language) => {
-    localStorage.setItem("sourceLang", JSON.stringify(lang));
-
-    if (lang.code === target.code) return switchLanguages();
-    setSource(lang);
-  };
-
-  const handleTargetLang = (lang: Language) => {
-    localStorage.setItem("targetLang", JSON.stringify(lang));
-
-    if (lang.code === target.code) return switchLanguages();
-    setTarget(lang);
   };
 
   useEffect(() => {
@@ -90,14 +59,13 @@ export const Translator = () => {
           <LanguageBar
             mobile={mobile}
             lang={source}
-            handleLanguage={handleSourceLang}
-            onChangeLang={handleSourceLang}
+            handleLanguage={setSource}
+            onChangeLang={setSource}
           />
           <TextArea
             value={input}
             maxLength={MAX_LENGTH}
             onChange={setInput}
-            onHeightChange={setInputHeight}
           />
         </Grid>
       </Grid>
@@ -107,14 +75,13 @@ export const Translator = () => {
         <LanguageBar
           mobile={mobile}
           lang={target}
-          handleLanguage={handleTargetLang}
-          onChangeLang={handleTargetLang}
+          handleLanguage={setTarget}
+          onChangeLang={setTarget}
         />
         <TextTranslated
           isError={isError}
           isPending={isPending}
           value={data?.responseData.translatedText}
-          height={inputHeight}
         />
       </Grid>
     </Grid>

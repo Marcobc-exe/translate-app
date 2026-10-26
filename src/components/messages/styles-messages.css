@@ -11,8 +11,8 @@
   font-size: 18px;
   line-height: 1.5;
 
-  resize: none;
-  overflow: hidden;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   box-sizing: border-box;
 
   transition: border 0.2s ease, background 0.2s ease;

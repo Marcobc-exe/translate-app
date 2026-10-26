@@ -1,28 +1,14 @@
 import "./styles-messages.css";
-import { useEffect, useRef, type FC } from "react";
+import type { FC } from "react";
 import { Grid } from "@mui/material";
 
 type Props = {
   value: string | undefined;
-  height?: number;
   isPending: boolean;
   isError: boolean;
 };
 
-export const TextTranslated: FC<Props> = ({
-  value,
-  height,
-  isPending,
-  isError,
-}) => {
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  useEffect(() => {
-    if (textareaRef.current && height) {
-      textareaRef.current.style.height = `${height}px`;
-    }
-  }, [height]);
-
+export const TextTranslated: FC<Props> = ({ value, isPending, isError }) => {
   let displayText = value ?? "";
 
   if (isPending) displayText = "Translating...";
@@ -30,12 +16,7 @@ export const TextTranslated: FC<Props> = ({
 
   return (
     <Grid width={"100%"}>
-      <textarea
-        ref={textareaRef}
-        className="output-base"
-        value={displayText}
-        readOnly
-      />
+      <div className="output-base">{displayText}</div>
     </Grid>
   );
 };

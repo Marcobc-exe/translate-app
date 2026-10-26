@@ -1,31 +1,30 @@
 import "./input.css";
 import { Grid } from "@mui/material";
-import { useRef, type ChangeEvent, type FC } from "react";
+import { useLayoutEffect, useRef, type ChangeEvent, type FC } from "react";
 
 type Props = {
   value: string;
   maxLength: number;
   onChange: (value: string) => void;
-  onHeightChange?: (height: number) => void;
 };
 
 export const TextArea: FC<Props> = ({
   value,
   maxLength,
   onChange,
-  onHeightChange,
 }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
-  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    const newValue = e.target.value;
-    onChange(newValue);
+  // Auto-grow on every value change (typing, clearing, programmatic updates)
+  useLayoutEffect(() => {
+    const textarea = textareaRef.current;
+    if (!textarea) return;
+    textarea.style.height = "auto";
+    textarea.style.height = `${textarea.scrollHeight}px`;
+  }, [value]);
 
-    if (textareaRef.current) {
-      textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-      onHeightChange?.(textareaRef.current.scrollHeight);
-    }
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    onChange(e.target.value);
   };
 
   const handleClear = () => {

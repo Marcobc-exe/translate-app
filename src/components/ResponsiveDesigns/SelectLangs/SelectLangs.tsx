@@ -2,7 +2,8 @@ import { useState, type FC } from "react";
 import type { Language } from "../../../types/languages";
 import { SelectLanguage } from "../../Selects/SelectLanguage";
 import { MostLikedLangs } from "../../MostLikedLangs/MostLikedLangs";
-import { LANGUAGES } from "../../../consts/Languages";
+import { isLanguageList, LANGUAGES } from "../../../consts/Languages";
+import { readJSON, writeJSON } from "../../../utils/storage";
 
 type Props = {
   mobile: boolean;
@@ -17,25 +18,19 @@ export const SelectLang: FC<Props> = ({
   handleLanguage,
   onChangeLang,
 }) => {
-  const [languagesList, setLanguagesList] = useState<Language[]>(() => {
-    const list = localStorage.getItem("mostUsedLanguages");
-    if (list) return JSON.parse(list);
-    return LANGUAGES;
-  });
+  const [languagesList, setLanguagesList] = useState<Language[]>(() =>
+    readJSON("mostUsedLanguages", LANGUAGES, isLanguageList),
+  );
 
   const mostUsedLanguages = (lang: Language) => {
-    const exists = languagesList.find(
-      (langlist) => langlist.code === lang.code,
-    );
+    const exists = languagesList.some((item) => item.code === lang.code);
 
-    if (exists) return onChangeLang(lang);
+    if (!exists) {
+      const next = [lang, ...languagesList.slice(0, -1)];
+      writeJSON("mostUsedLanguages", next);
+      setLanguagesList(next);
+    }
 
-    languagesList.pop();
-    languagesList.unshift(lang);
-
-    localStorage.setItem("mostUsedLanguages", JSON.stringify(languagesList));
-
-    setLanguagesList(languagesList);
     onChangeLang(lang);
   };
 

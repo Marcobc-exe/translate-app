@@ -1,0 +1,28 @@
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: none;
+  background: #1e293b;
+  color: #e2e8f0;
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btn-copy:hover:not(:disabled) {
+  background: #334155;
+}
+
+.btn-copy:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-copy.is-copied {
+  background: #14532d;
+  color: #bbf7d0;
+}

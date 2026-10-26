@@ -1,94 +1,155 @@
 import "./languageSelect.css";
-import { useEffect, useRef, useState, type FC } from "react";
+import {
+  useEffect,
+  useId,
+  useRef,
+  useState,
+  type FC,
+  type KeyboardEvent,
+} from "react";
 import type { Language } from "../../../../types/languages";
 import { ALLLANGUAGES } from "../../../../consts/Languages";
 
 type Props = {
+  label: string;
   value: Language;
   onChange: (lang: Language) => void;
 };
 
-export const LanguageSelect: FC<Props> = ({
-  value: lang,
-  onChange: onChangeLang,
-}) => {
+const LAST = ALLLANGUAGES.length - 1;
+
+// Select-only combobox (WAI-ARIA listbox pattern): a single tab stop, focus
+// moves into the list while open and returns to the button on close.
+export const LanguageSelect: FC<Props> = ({ label, value, onChange }) => {
   const [open, setOpen] = useState(false);
-  const [focusedIndex, setFocusedIndex] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const listRef = useRef<HTMLUListElement>(null);
+  const id = useId();
+  const listId = `${id}-list`;
+  const optionId = (index: number) => `${id}-option-${index}`;
 
-  const handleSelect = (language: Language) => {
-    onChangeLang(language);
+  const openList = () => {
+    const selected = ALLLANGUAGES.findIndex((lang) => lang.code === value.code);
+    setActiveIndex(Math.max(selected, 0));
+    setOpen(true);
+  };
+
+  const close = (returnFocus = true) => {
     setOpen(false);
+    if (returnFocus) buttonRef.current?.focus();
   };
 
-  // Navigation with arrows keys function
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (!open && e.key === "Enter") {
-      e.preventDefault();
-      return setOpen(true);
-    }
-    if (e.key === "Escape") return setOpen(false);
-
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleSelect(ALLLANGUAGES[focusedIndex]);
-      setOpen(false);
-    }
-
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      return setFocusedIndex((prev) =>
-        prev === ALLLANGUAGES.length - 1 ? 0 : prev + 1,
-      );
-    }
-
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      return setFocusedIndex((prev) =>
-        prev === 0 ? ALLLANGUAGES.length - 1 : prev - 1,
-      );
-    }
+  const select = (lang: Language) => {
+    onChange(lang);
+    close();
   };
 
-  // Close if clicked out
   useEffect(() => {
-    const handleClick = (e: MouseEvent) => {
-      if (!ref.current?.contains(e.target as Node)) {
-        setOpen(false);
-      }
+    if (open) listRef.current?.focus();
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return;
+    document
+      .getElementById(optionId(activeIndex))
+      ?.scrollIntoView({ block: "nearest" });
+  });
+
+  // Close when interacting outside; only listens while open
+  useEffect(() => {
+    if (!open) return;
+    const handlePointerDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setOpen(false);
     };
-    window.addEventListener("click", handleClick);
-    return () => window.removeEventListener("click", handleClick);
-  }, []);
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
+  }, [open]);
+
+  const handleButtonKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
+      openList();
+    }
+  };
+
+  const handleListKeyDown = (e: KeyboardEvent<HTMLUListElement>) => {
+    switch (e.key) {
+      case "ArrowDown":
+        e.preventDefault();
+        return setActiveIndex((prev) => (prev === LAST ? 0 : prev + 1));
+      case "ArrowUp":
+        e.preventDefault();
+        return setActiveIndex((prev) => (prev === 0 ? LAST : prev - 1));
+      case "Home":
+        e.preventDefault();
+        return setActiveIndex(0);
+      case "End":
+        e.preventDefault();
+        return setActiveIndex(LAST);
+      case "Enter":
+      case " ":
+        e.preventDefault();
+        return select(ALLLANGUAGES[activeIndex]);
+      case "Escape":
+        e.preventDefault();
+        return close();
+      case "Tab":
+        return close(false);
+    }
+  };
 
   return (
-    <div
-      className="custom-select"
-      ref={ref}
-      tabIndex={0}
-      onKeyDown={handleKeyDown}
-    >
-      <button className="select-button" onClick={() => setOpen(!open)}>
-        <span className="select-label">{lang.label}</span>
-        <span className={`arrow ${open ? "rotate" : ""}`}>
+    <div className="language-select" ref={rootRef}>
+      <button
+        ref={buttonRef}
+        type="button"
+        className="select-button"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={open ? listId : undefined}
+        aria-label={`${label}: ${value.label}. All languages`}
+        onClick={() => (open ? close(false) : openList())}
+        onKeyDown={handleButtonKeyDown}
+      >
+        <span className="select-label">{value.label}</span>
+        <span className={`arrow ${open ? "rotate" : ""}`} aria-hidden="true">
           ▼
         </span>
       </button>
 
       {open && (
-        <div className="dropdown">
-          {ALLLANGUAGES.map((language, index) => (
-            <div
-              key={language.code}
-              className={`option ${
-                language.code === lang.code ? "active" : ""
-              } ${index === focusedIndex ? "focused" : ""}`}
-              onClick={() => handleSelect(language)}
-            >
-              {language.label}
-            </div>
-          ))}
-        </div>
+        <ul
+          ref={listRef}
+          id={listId}
+          role="listbox"
+          tabIndex={-1}
+          aria-label={label}
+          aria-activedescendant={optionId(activeIndex)}
+          className="dropdown"
+          onKeyDown={handleListKeyDown}
+        >
+          {ALLLANGUAGES.map((lang, index) => {
+            const selected = lang.code === value.code;
+            return (
+              <li
+                key={lang.code}
+                id={optionId(index)}
+                role="option"
+                aria-selected={selected}
+                className={`option ${selected ? "active" : ""} ${
+                  index === activeIndex ? "focused" : ""
+                }`}
+                onClick={() => select(lang)}
+                onMouseMove={() => setActiveIndex(index)}
+              >
+                {lang.label}
+                {selected && <span aria-hidden="true">✓</span>}
+              </li>
+            );
+          })}
+        </ul>
       )}
     </div>
   );

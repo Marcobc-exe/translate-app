@@ -1,5 +1,5 @@
 import "./translator.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useTranslate } from "../../hooks/useTranslate";
 import { TextArea } from "../Inputs/Input";
 import { TextTranslated } from "../messages/TextTranslated";
@@ -7,6 +7,7 @@ import { Grid, useMediaQuery, useTheme } from "@mui/material";
 import { useDebounce } from "../../hooks/useDebounce";
 import { LanguageBar } from "../LanguageBar/LanguageBar";
 import { useLanguagePair } from "../../hooks/useLanguagePair";
+import { normalizeText } from "../../utils/text";
 
 const MAX_LENGTH = 250;
 
@@ -14,8 +15,13 @@ export const Translator = () => {
   const { source, target, setSource, setTarget } = useLanguagePair();
   const [input, setInput] = useState("");
 
-  const { mutate, data, isError, isPending, reset } = useTranslate();
-  const debounceInput = useDebounce(input, 500);
+  const text = normalizeText(input);
+  const query = useDebounce(text, 500);
+  const { data, error, isFetching } = useTranslate({
+    text: query,
+    source: source.code,
+    target: target.code,
+  });
 
   /* 
     xs 0px
@@ -27,20 +33,6 @@ export const Translator = () => {
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down("sm"));
   const tablet = useMediaQuery(theme.breakpoints.down("md"));
-
-  const translateText = (text: string) => {
-    mutate({
-      text: text,
-      source: source.code,
-      target: target.code,
-    });
-  };
-
-  useEffect(() => {
-    const text = debounceInput.trim();
-    if (!text) return reset();
-    translateText(text);
-  }, [debounceInput, source, target]);
 
   return (
     <Grid
@@ -79,9 +71,9 @@ export const Translator = () => {
           onChangeLang={setTarget}
         />
         <TextTranslated
-          isError={isError}
-          isPending={isPending}
-          value={data?.responseData.translatedText}
+          value={text ? data : undefined}
+          isLoading={!!text && isFetching}
+          error={text ? error : null}
         />
       </Grid>
     </Grid>

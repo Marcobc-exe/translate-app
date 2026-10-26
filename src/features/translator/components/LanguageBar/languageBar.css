@@ -1,0 +1,41 @@
+.language-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.language-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.language-tab {
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: 0.2s ease;
+  color: #94a3b8;
+}
+
+.language-tab:hover {
+  background: #1e293b;
+  color: white;
+}
+
+.language-tab[aria-selected="true"] {
+  color: white;
+  border-bottom-color: white;
+}
+
+@media (max-width: 599px) {
+  .language-tabs {
+    display: none;
+  }
+}

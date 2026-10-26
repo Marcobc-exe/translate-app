@@ -1,0 +1,91 @@
+.language-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-button {
+  border: none;
+  background: transparent;
+  color: #94a3b8;
+  font: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+
+.select-button:hover,
+.select-button[aria-expanded="true"] {
+  background: #1e293b;
+  color: white;
+}
+
+.arrow {
+  font-size: 12px;
+  transition: transform 0.2s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 200px;
+  max-height: 280px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+  background: #020617;
+  border-radius: 10px;
+  border: 1px solid #1e293b;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+  z-index: 100;
+}
+
+.dropdown:focus {
+  outline: none;
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #94a3b8;
+}
+
+.option.active {
+  color: white;
+}
+
+.option.focused {
+  background: #1e293b;
+  color: white;
+}
+
+.select-label {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .select-label {
+    display: inline;
+  }
+
+  .dropdown {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}

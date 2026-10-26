@@ -1,0 +1,94 @@
+.input-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input-base {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 140px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8fafc;
+  font: inherit;
+  font-size: 18px;
+  line-height: 1.5;
+  resize: none;
+  padding: 6px 44px 6px 0;
+}
+
+.input-base::placeholder {
+  /* 5.8:1 on the panel background (WCAG AA) */
+  color: #8494ab;
+}
+
+.char-counter {
+  font-size: 12px;
+  color: #a0a0a0;
+  margin-right: auto;
+
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.1s ease;
+}
+
+@keyframes shaking {
+  0% { transform: translate(1px);}
+  10% { transform: translate(0px);}
+  20% { transform: translate(-1px);}
+
+  30% { transform: translate(0px);}
+  40% { transform: translate(1px);}
+  50% { transform: translate(2px);}
+
+  60% { transform: translate(1px);}
+  70% { transform: translate(0px);}
+  80% { transform: translate(-1px);}
+
+  90% { transform: translate(-2px);}
+  100% { transform: translate(-0px);}
+}
+
+.max-char {
+  color: rgb(255, 78, 78);
+  animation: shaking 0.3s linear;
+  animation-iteration-count: initial;
+}
+
+.btn-clearinput {
+  position: absolute;
+  right: 0px;
+  top: 6px;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  font-size: large;
+
+  border: none;
+  background: #2b3442;
+  color: white;
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* visibility (not just opacity) keeps the hidden button out of the tab order */
+  visibility: hidden;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: all 0.1s ease;
+}
+
+.btn-clearinput.visible, .char-counter.visible {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.btn-clearinput:hover {
+  background: #394253;
+}

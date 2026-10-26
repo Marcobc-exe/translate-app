@@ -1,6 +1,5 @@
-import './App.css'
-import { Title } from './components/Title/Title'
-import { Translator } from './components/translator/Translator'
+import { Title } from './shared/components/Title/Title'
+import { Translator } from './features/translator/Translator'
 
 const App = () => {
 

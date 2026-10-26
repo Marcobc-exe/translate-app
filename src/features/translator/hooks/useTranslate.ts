@@ -1,7 +1,7 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { translateText } from "../api/translate.api";
-import { TranslationError } from "../api/errors";
-import type { LanguageCode } from "../types/languages";
+import { translateText } from "../../../api/translate.api";
+import { TranslationError } from "../../../api/errors";
+import type { LanguageCode } from "../../../types/languages";
 
 type Params = {
   text: string;

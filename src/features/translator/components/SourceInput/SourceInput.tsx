@@ -1,5 +1,4 @@
-import "./input.css";
-import { Grid } from "@mui/material";
+import "./sourceInput.css";
 import { useLayoutEffect, useRef, type ChangeEvent, type FC } from "react";
 
 type Props = {
@@ -8,7 +7,7 @@ type Props = {
   onChange: (value: string) => void;
 };
 
-export const TextArea: FC<Props> = ({
+export const SourceInput: FC<Props> = ({
   value,
   maxLength,
   onChange,
@@ -33,7 +32,7 @@ export const TextArea: FC<Props> = ({
   };
 
   return (
-    <Grid size={6} width={"100%"}>
+    <>
       <div className="input-wrapper">
         <textarea
           ref={textareaRef}
@@ -57,6 +56,6 @@ export const TextArea: FC<Props> = ({
       >
         {value.length}/{maxLength}
       </div>
-    </Grid>
+    </>
   );
 };

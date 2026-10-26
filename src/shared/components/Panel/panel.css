@@ -1,0 +1,35 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: #0f172a;
+  border-radius: 18px;
+  padding: 18px;
+  border: 1px solid #1e293b;
+  transition: border-color 0.2s ease;
+}
+
+.panel:hover,
+.panel:focus-within {
+  border-color: #334155;
+}
+
+.panel__header {
+  padding: 10px 6px;
+  border-bottom: 1px solid #1e293b;
+  margin-bottom: 8px;
+}
+
+.panel__body {
+  flex: 1;
+  position: relative;
+}
+
+.panel__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  min-height: 34px;
+  margin-top: 6px;
+}

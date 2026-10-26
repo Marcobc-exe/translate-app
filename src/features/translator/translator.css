@@ -1,0 +1,14 @@
+.translator {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  max-width: 1350px;
+  margin: 0 auto;
+  padding: 30px 16px;
+}
+
+@media (min-width: 900px) {
+  .translator {
+    grid-template-columns: 1fr 1fr;
+  }
+}

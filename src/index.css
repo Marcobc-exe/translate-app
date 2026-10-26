@@ -19,3 +19,10 @@
   min-width: 320px;
   min-height: 100vh;
 } */
+
+html {
+  background: linear-gradient(180deg, #0f172a, #020617);
+  font-family: system-ui, -apple-system, sans-serif;
+  color: white;
+  height: 100%;
+}

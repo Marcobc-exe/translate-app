@@ -1,15 +1,17 @@
-import "./selects.css";
+import "./languageSelect.css";
 import { useEffect, useRef, useState, type FC } from "react";
-import type { Language } from "../../types/languages";
-import { ALLLANGUAGES } from "../../consts/Languages";
+import type { Language } from "../../../../types/languages";
+import { ALLLANGUAGES } from "../../../../consts/Languages";
 
 type Props = {
-  mobile: boolean;
-  lang: Language;
-  onChangeLang: (lang: Language) => void;
+  value: Language;
+  onChange: (lang: Language) => void;
 };
 
-export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
+export const LanguageSelect: FC<Props> = ({
+  value: lang,
+  onChange: onChangeLang,
+}) => {
   const [open, setOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(0);
   const ref = useRef<HTMLDivElement>(null);
@@ -67,10 +69,8 @@ export const SelectLanguage: FC<Props> = ({ onChangeLang, mobile, lang }) => {
       onKeyDown={handleKeyDown}
     >
       <button className="select-button" onClick={() => setOpen(!open)}>
-        {mobile && lang.label}
-        <span
-          className={`arrow ${open ? "rotate" : ""} ${mobile ? "mobile" : ""}`}
-        >
+        <span className="select-label">{lang.label}</span>
+        <span className={`arrow ${open ? "rotate" : ""}`}>
           ▼
         </span>
       </button>

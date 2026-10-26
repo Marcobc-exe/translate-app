@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import type { Language } from "../types/languages";
-import { findLanguage, isLanguage, LANGUAGES } from "../consts/Languages";
-import { readJSON, writeJSON } from "../utils/storage";
+import type { Language } from "../../../types/languages";
+import { findLanguage, isLanguage, LANGUAGES } from "../../../consts/Languages";
+import { readJSON, writeJSON } from "../../../shared/utils/storage";
 
 type LanguagePair = { source: Language; target: Language };
 

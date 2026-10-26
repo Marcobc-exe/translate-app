@@ -66,3 +66,12 @@
   background: #0f172a;
   color: white;
 }
+.select-label {
+  display: none;
+}
+
+@media (max-width: 599px) {
+  .select-label {
+    display: inline;
+  }
+}
